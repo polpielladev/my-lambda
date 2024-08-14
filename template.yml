@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  PostNameFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Zip
+      CodeUri: .build/plugins/AWSLambdaPackager/outputs/AWSLambdaPackager/MyLambda/MyLambda.zip
+      Handler: bootstrap
+      Runtime: provided.al2
+      MemorySize: 128
+      Timeout: 30
+      Architectures:
+        - arm64
+      Events:
+        # handles the GET /items method of the REST API
+        Api:
+          Type: HttpApi
+          Properties:
+            Method: post
+            Path: /name
+
+Outputs:
+  SwiftAPIEndpoint:
+    Description: "API Gateway endpoint URL for your application"
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com"
