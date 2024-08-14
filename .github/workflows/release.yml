@@ -13,10 +13,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
-      - name: Install swiftly
-        run: curl -L https://swift-server.github.io/swiftly/swiftly-install.sh | bash
-      - name: Install the latest Swift toolchain
-        run: swiftly install 5.10
       - name: Build executable
         run: swift package --disable-sandbox archive
       - run: sam build --use-container
